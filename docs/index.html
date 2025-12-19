@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<title>How to Create Cross Stitch Data with Inkscape</title>
+<style>
+
+    :root {
+        --bg-color: #FAFAF5;
+        --primary-color: #2C3E50;
+        --accent-color: #E67E22;
+        --text-color: #333333;
+        --grid-line: #e0e0e0;
+    }
+    *{
+		margin:0;
+		padding:0;
+
+    }
+
+	body{
+		margin:0;
+		padding:0;
+		color: var(--text-color);
+		overflow-y: scroll;
+		border: 1px solid var(--grid-line);
+		background-color: #fff;
+		background-image: 
+		linear-gradient(45deg, transparent 49.5%, var(--grid-line) 49.5%, var(--grid-line) 50.5%, transparent 50.5%),
+		linear-gradient(-45deg, transparent 49.5%, var(--grid-line) 49.5%, var(--grid-line) 50.5%, transparent 50.5%);
+		background-size: 30px 30px;
+	}
+
+	header{
+		position: sticky;
+		top: 0;
+		background:#fff;
+		padding:16px 32px;
+		display:flex;
+		box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+		align-items: center;
+		justify-content: space-around;
+		z-index:100;
+	}
+
+
+	h1{
+		flex:1;
+		font-size:24px;
+		padding-left:16px;
+		color: var(--primary-color);
+	}
+
+
+	main{
+		max-width:1024px;
+		margin:32px auto;
+		background:#fff;
+		padding:16px 32px;
+		border-radius:16px;
+		box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+	}
+	h2{
+		background:#fff;
+		border-radius:4px;
+		position: sticky;
+		top: 76px;
+		font-size:20px;
+		border-left:8px solid var(--accent-color);
+		margin:16px 0;
+		padding:4px 16px;
+		color: var(--primary-color);
+	}
+	a{
+		color:#000;
+	}
+	a:hover{
+		text-decoration:none;
+	}
+	ol li b{
+		color:#f00;
+	}
+
+	ol{
+		padding:0 32px;
+	}
+
+
+	li{
+		margin-bottom:16px;
+		line-height:250%;
+	}
+	p{
+		line-height:250%;
+	}
+	ul{
+		list-style:none;
+	}
+	footer{
+		max-width:1024px;
+		margin:32px auto 16px auto;
+		padding:32px 0;
+	}
+	footer p{
+		text-align:center;
+	}
+	article{
+		padding:0 16px;
+		margin-bottom:32px;
+	}
+	section{
+		padding:0 16px;
+		margin-bottom:32px;
+		text-align:center;
+	}
+	p small{
+		line-height:100%;
+	}
+
+    .btn {
+        display: inline-block;
+        padding: 12px 30px;
+        border-radius: 50px;
+        font-weight: bold;
+        margin: 0 10px;
+        width:180px;
+    }
+    .btn-primary {
+        background-color: var(--accent-color);
+        color: #fff;
+        box-shadow: 0 4px 10px rgba(230, 126, 34, 0.4);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(230, 126, 34, 0.6); }
+    .btn-secondary {
+        background-color: var(--primary-color);
+        color: #fff;
+    }
+    .btn-secondary:hover { opacity: 0.9; }
+
+    #faq ul li:nth-of-type(odd) {
+		font-weight: bold;
+		margin-bottom:8px;
+		border-bottom:1px solid var(--accent-color);
+		line-height:100%;
+		padding-bottom:4px;
+	}
+
+    #faq ul li:nth-of-type(odd):before {
+		content:"Q.";
+		margin-right:8px;
+	}
+
+	 #faq ul li:nth-of-type(even) {
+	 	font-size:90%;
+	 }
+
+</style>
+</head>
+<body>
+<header>
+	<img src="./img/icon.png" width="44" height="44">
+	<h1 class="ja">Inksacpeでクロスステッチデータを作る方法</h1>
+	<h1 class="en">How to Create Cross Stitch Data with Inkscape</h1>
+</header>
+<main>
+<div>
+	<h2 class="ja">はじめに</h2>
+	<h2 class="en">Introduction</h2>
+	<article>
+	<img src="./img/sample000.jpg" width="200" height="200" align="right">
+	<p class="ja">このページを見ている方の大半は<a href="https://inkstitch.org/">Ink/Stitch</a>の存在を知っていると思います。<br>
+	Ink/Stitchは<a href="https://inkscape.org/">Inkscape</a>の拡張機能で、刺繍データを作成するためのツールです。<br>
+	しかし、私が刺繍ミシンを手に入れた2025年12月時点でInk/Stitchを使ったクロスステッチのデータを<b>簡単に</b>作成する方法について有益な情報を見つけることができませんでした。<br>
+	Githubの<a href="https://github.com/inkstitch/inkstitch/issues/2333">Issues</a>を見ても2023年で止まったままです。<br>
+	色々調べると、フランスの方が書いた<a href="https://lyogau.over-blog.com/2022/03/faire-du-point-de-croix-avec-inkstitch-2.1-partie-1.html">Alyogau</a>という記事がありましたが、手順が省略されているのと、なんとか再現しても工程が多く「<b>もっと簡易にデータを作れれば良いのに…</b>」と思いました。</p>
+	<p class="ja">ここでは、私が開発したInk/PixelとStitchHelperとInk/Stitchを使用してクロスステッチデータを作成する方法を説明します。</p>
+	<p class="en">I assume that those viewing this page are aware of <a href="https://inkstitch.org/">Ink/Stitch</a>.<br>
+	Ink/Stitch is an extension for <a href="https://inkscape.org/">Inkscape</a> and a tool for creating embroidery data.<br>
+	However, as of December 2025, when I acquired my embroidery machine, I couldn't find any useful information on how to easily create cross-stitch data using Ink/Stitch.<br>
+	Looking at the <a href="https://github.com/inkstitch/inkstitch/issues/2333">Issues</a> on Github, they stopped in 2023.<br>
+	After much research, I found an article called <a href="https://lyogau.over-blog.com/2022/03/faire-du-point-de-croix-avec-inkstitch-2.1-partie-1.html">Alyogau</a> written by a French person, but the steps were omitted, and even when I managed to reproduce it, the process was extensive, making me think, "I wish I could create the data more simply..."</p>
+	<p class="en">
+	Here, I will explain how to create cross-stitch data using Ink/Pixel, StitchHelper, and Ink/Stitch, which I have developed.</p>
+	</article>
+</div>
+<div>
+	
+	<h2 class="ja">なぜInk/PixelとStitchHelperを使うのか？</h2>
+	<h2 class="en">Why use Ink/Pixel and StitchHelper?</h2>
+	<article>
+	<img src="./img/screen.gif" width="200" height="200" align="right">
+	<p class="ja">
+	最初は「<b>ユーザーがInkscape作ったPixelのデータを変換するだけで良いのでは？</b>」と思っていたのですが、2007年から20年弱もInkscapeを使い続けている私でも「Inkscapeはドット絵を作るのには向いていない」と言わざるを得えません。<br>
+	<small>(私は、2023年に<a href="https://note.com/kurokky/n/n6190a71858ae">アイロンビーズ用のツール</a>を開発したことがあったのですが、そのインターフェースと比較してもInkscapeでドット絵を作成するのは非常に手間がかかります。)</small></p>
+	<p class="ja">
+	私ががやりたいのは、<b>ドット絵を簡単に作成して、それをクロスステッチデータに変換すること</b>です。<br>
+	そこで、私は<b>Inkscapeでドット絵を簡単に作成できるInk/Pixelという拡張機能を作りました</b>。かなり無理矢理な実装にしているので専用ツールには叶いませんが、ある程度のデータであれば矩形ツールを駆使して作成するよりも遥かに簡単にドット絵を作成できると思います。</p>
+
+	<p class="ja">そして、<b>StitchHelperはドット絵をクロスステッチデータに変換するためのInkscapeの拡張機能</b>です。<br>
+	この2つの拡張を使うことで、ようやくInk/Stitchで刺繍用のデータを作成することができるようになります。<br>
+	<small>※右にある画面キャプチャとページの最初にある写真は下糸が切れたのを放置してしまい、少し失敗しています。</small>
+</p>
+
+
+	<p class="en">At first, I thought, "Wouldn't it be enough to just convert the pixel data created by the user in Inkscape?", but even for me, who has been using Inkscape since 2007, Inkscape is not suitable for creating pixel art.<br>
+	<small>(I developed <a href="https://note.com/kurokky/n/n6190a71858ae">a tool for Perler beads</a> in 2023, and compared to that interface, creating pixel art in Inkscape is very time-consuming.)</small></p>
+	<p class="en">What I want to do is easily create pixel art and convert it into cross-stitch data.<br>
+	Therefore, I created an extension called Ink/Pixel that allows you to easily create pixel art in Inkscape. Although the implementation is quite forced and cannot compete with dedicated tools, I believe it allows for much easier creation of pixel art compared to using the rectangle tool for a certain amount of data.</p>
+	<p class="en">And StitchHelper is an Inkscape extension for converting pixel art into cross-stitch data.<br>
+	By using these two extensions, you can finally create embroidery data with Ink/Stitch.<br>
+	<small>(The screenshot on the right and the photo at the beginning of the page are slightly flawed because I neglected to change the bobbin thread when it ran out.)</small>
+</p>
+	</article>
+</div>
+<div>
+	<h2>Download</h2>
+	<section>
+        <ul>
+        	<li><a href="#" class="btn btn-primary"><i class="fa-solid fa-download"></i> Ink/Pixel 0.0.0.1</a><a href="#" class="btn btn-secondary">GitHub</a></li>
+        	<li><a href="#" class="btn btn-primary"><i class="fa-solid fa-download"></i> StitchHelper 0.0.0.1</a><a href="#" class="btn btn-secondary">GitHub</a></li>
+        </ul>
+        <p class="ja"><small>
+		※クロスステッチのデータだけであれば、Ink/Pixelは不要ですが最初は2つの拡張をインストールしてdemoデータを作ることをお勧めします。</small>
+		</p>
+		<p class="en"><small>If you only need cross-stitch data, Ink/Pixel is not necessary, but I recommend installing both extensions to create demo data initially.</small></p>
+	</section>
+
+</div>
+<div>
+	<h2 class="ja">使い方</h2>
+	<h2 class="en">How to Use</h2>
+	<article>
+	<p class="ja">まずは、以下の方法でやってみてください。(工程が多いように感じますが、慣れると簡単に作れます)</p>
+	<p class="en">First, please try the following method. (It may seem like a lot of steps, but it becomes easy once you get used to it.)</p>
+	<ol class="ja">
+		<li>InkscapeにInk/PixelとStitchHelperをインストールします。<br>
+		(Ink/Stitchと同じでDLしたファイルを解凍してextensionフォルダの中に入れてInkscapeを起動してください)</li>
+		<li>まずは、刺繍枠に適したDocumetntのサイズを設定します。<br>
+			<b>Extension -&gt; StitchHelper -&gt; Embroidery Hoop</b> から自分で使っている刺繍枠のサイズを選択します。<br>
+		（見つからない場合はCtrl+Shift+Dで変更してください）<br>
+		<img src="./img/sc00001.png">
+		</li>
+		<li><b>Extension -&gt; Ink/Pixel -&gt;Pixel Size:Cross stitch(fabric count) -&gt; 11spi(2.3mm)</b> を選択します。<br>（まずは2.3mmからはじめましょう）<br>
+		<img src="./img/sc00002.png">
+		</li>
+		<li>すると、自動でGridが自動で表示されDocumentサイズに沿って2.3mmの正方形が作成されます。<br>(この正方形は、クリックしやすいように白のグラデーションがデフォルトになっています)<br>
+		<img src="./img/sc00002_2.png" width="40%">
+		</li>
+		<li>自分の作りたいデザインを作ります。<br>（くれぐれもPixelのサイズを変更したり、グループ化などは使わないようにしてください）<br>
+		<img src="./img/sc00003.png">
+		</li>
+		<li>デザインができたら刺繍データにしたいPixelを選択します。<br>（通常は何か1つのPixelを選択してCtrl+Aの全て選択で大丈夫です）</li>
+		<li><b>Extension -&gt; StitchHelper -&gt; Create the Pattern from Pixel -&gt; By Separating layers for each color</b> をクリックします。<br>
+		<img src="./img/sc00004.png">
+		</li>
+		<li>すると、色ごとに変換されたデータがレイヤー別にできます。<br>(元のPixelデータのレイヤーは非表示になります)<br>
+		<img src="./img/sc00008.png" width="40%">
+		</li>
+		<li>刺繍データにしたいレイヤーのデータだけを選択します。<br>(今回はハートの赤い部分だけを選択して作ります)
+		</li>
+		<li><b>Extension -&gt; Ink/Stitch -&gt; Tools:Satin -&gt; サテン自動ルーティング</b> を選択します。<br><img src="./img/sc00009.png"></li>
+		<li>するとこのようなデータができるはずです。(クリックして確認してください)<br>
+		<a href="./img/sc00010.png" target="_blank"><img src="./img/sc00010.png" width="40%"></a>
+		</li>
+		<li>できたデータを選択し<b>Extension -&gt; Ink/Stitch -&gt; Tools:Stroke -&gt; Satin to Stroke</b> をクリックします。<br>
+		<img src="./img/sc00013_2.png">
+		</li>
+		<li>このような感じになれば、成功です。(先程と同じように見えますが、微妙に違います)<br>
+		<a href="./img/sc00011.png" target="_blank"><img src="./img/sc00011.png" width="40%"></a>
+		</li>
+		<li><b>Extension -&gt; Ink/Stitch -&gt; Params</b> でデータを確認します。<br>
+		<img src="./img/sc00015.png">
+		</li>
+	</ol>
+	<p class="ja"><b>Tips</b>: 糸の細さが#50ならば「3」か「4」#60なら「3」をrepeatsに値を入れることをお勧めします。<br>
+	<img src="./img/sc00014.png" width="40%">
+	</p>
+
+
+	<ol class="en">
+		<li>Install Ink/Pixel and StitchHelper in Inkscape.<br>
+		(Similar to Ink/Stitch, unzip the downloaded file, place it in the extension folder, and then start Inkscape.)</li>
+		<li>First, set the Document size suitable for your embroidery hoop.<br>
+		Go to <b>Extension -> StitchHelper -> Embroidery Hoop </b>and select the size of the embroidery hoop you use.<br>
+		(If you cannot find it, please change it by pressing Ctrl+Shift+D)<br>
+		<img src="./img/sc00001.png">
+		</li>
+		<li>Select <b>Extension -> Ink/Pixel -> Pixel Size: Cross stitch (fabric count) -> 11spi (2.3mm)</b>.<br> (Let's start with 2.3mm first.)<br>
+		<img src="./img/sc00002.png">
+		</li>
+		<li>Then, the grid will be displayed automatically, and a 2.3mm square will be created along the document size.<br>
+		(This square has a white gradient by default for ease of clicking.)<br>
+		<img src="./img/sc00002_2.png" width="40%">
+		</li>
+		<li>You will create the design You want to make.<br>(Please be careful not to change the pixel size or use grouping.)<br>
+		<img src="./img/sc00003.png">
+		</li>
+		<li>Once the design is ready, select the Pixels you want to convert into embroidery data.<br>
+		(Usually, selecting one Pixel and pressing Ctrl+A for "Select All" is sufficient)
+		</li>
+		<li>Click <b>Extension -> StitchHelper -> Create the Pattern from Pixel -> By Separating layers for each color.</b><br>
+		<img src="./img/sc00004.png">
+		</li>
+		<li>Then, data converted for each color can be created layer by layer. <br>The original Pixel data layer will be hidden)<br>
+		<img src="./img/sc00008.png" width="40%">
+		</li>
+		<li>Select only the data of the layers you want to turn into embroidery data.<br>(This time, we will select only the red part of the heart to create it.)</li>
+		<li>Click <b>Extension -&gt; Ink/Stitch -&gt; Tools:Satin -&gt; Auto-Route Satin</b><br><img src="./img/sc00012.png"></li>
+		<li>You should get data like this. (Please click the image to check.)<br>
+		<a href="./img/sc00010.png" target="_blank"><img src="./img/sc00010.png" width="40%"></a>
+		</li>
+		<li>After selecting the generated data, click <b>Extension -&gt; Ink/Stitch -&gt; Tools:Stroke -&gt; Satin to Stroke</b><br>
+		<img src="./img/sc00013.png">
+		</li>
+		<li>This is what success looks like. (It looks the same as before, but it's subtly different.)<br>
+		<a href="./img/sc00011.png" target="_blank"><img src="./img/sc00011.png" width="40%"></a>
+		</li>
+		<li>Click <b>Extension -> Ink/Stitch -> Params</b> to check the data.<br>
+		<img src="./img/sc00015.png">
+		</li>
+	</ol>
+
+	<p class="en"><b>Tips</b>: If the thread thickness is #50, we recommend entering "4" or "3" for repeats, and if it is #60, enter "3".<br>
+	<img src="./img/sc00014.png" width="40%">
+	</p>
+	</article>
+</div>
+<div>
+	<h2 class="ja">【免責事項】必ずお読みください</h2>
+	<article>
+		<p class="ja">
+		この拡張ををご利用いただく前に、以下の点をご了承ください。(使用した際は了承したとみなします。)</p>
+		<ul class="ja">
+			<li><b>自己責任での利用</b>： 本ソフトは作者が個人的に開発・公開しているものです。自分が使用する上での検証は行っていますが、予期せぬ不具合が含まれる可能性があります。ご利用はすべてユーザー自身の責任で行ってください。</li>
+			<li><b>ミシン等の破損について</b>： 出力されたデータを使用した結果、刺繍ミシンの針が折れたり、枠に当たったり、ミシン本体が故障したり、布がダメになったりした場合でも、作者は修理費や材料費等の補償は一切行いません。<br>
+				<b>※必ず本番前に、不要な布で低速でのテスト縫いをお願いします。</b>
+			</li>
+			<li><b>データの商用利用について</b>： 本ソフトで作成した刺繍データの販売は自由に行っていただけますが、それにより発生したトラブルについて作者は関知しません。</li>
+			<li><b>サポートについて</b>： 申し訳ないですが、個別対応などサポートをするつもりはありません。高いソフトを買わずに役に立ったよ！などのカンパは大歓迎します！(noteの記事の購入で可能です)</li>
+		</ul>
+	</article>
+</div>
+<div>
+	<h2 class="en">[Disclaimer] Please read carefully</h2>
+	<article>
+	<p class="en">Please understand the following points before using this extension. (By using it, you are deemed to have understood.)</p>
+	<ul class="en">
+	<li><b>Use at your own risk</b>: This software is developed and released personally by the author. While it has been tested for personal use, unexpected bugs may be included. All use must be at the user's own risk.</li>
+	<li><b>Regarding damage to embroidery machines, etc.</b>: Even if the embroidery machine needle breaks, hits the hoop, the machine itself malfunctions, or the fabric is damaged as a result of using the output data, the author will not compensate for repair costs, material costs, etc.<br>
+	<b>* Please be sure to perform test stitches on scrap fabric at low speed before actual use.</b></li>
+	<li><b>Commercial use of data</b>: You are free to sell embroidery data created with this software, but the author will not be involved in any trouble that arises from it.</li>
+	<li><b>About support</b>: We apologize, but we do not intend to provide individual support. Donations such as "It was helpful without buying expensive software!" are greatly appreciated! (This can be done by purchasing the article on note.)</li>
+	</ul>
+	</article>
+</div>
+
+<div id="faq">
+	<h2>FAQ</h2>
+	<article>
+	<ul class="ja">
+	<li>クロスステッチをミシンでやる必要ってある？</li>
+	<li>私も最初は「必要ないのでは？」と思っていましたが、クロスステッチはマス目が数えやすい布を選ぶ必要があります。その為刺繍を入れたい素材そのものに直接刺繍を行う事が難しく多くの場合はアップリケにする必要があるのですが、ミシンを使うことでミシンが対応する素材であれば生地を選ばなくなります。<br>
+	また、私は首の疾患を抱えているので長時間下を向く作業をすることができません。ミシンを使うことで負担を減らすことができます。</li>
+	</li>
+	<li>どうしてInk/Stitchにcommitしないんですか？</li>
+	<li>自分が開発している時に、どこまでがInk/Stitchで対応すべきか？が分からなかったからです。クロスステッチにはPixelデータを作ることから始まり、刺繍データに変換するまでに多くのステップがあります。<br>そのため、Ink/Stitchに全てを詰め込むのは適切ではないと考えました。<br>ただし、将来的にはInk/Stitchに取り込まれる可能性もあります。</li>
+	<li>どうしてInk/Pixelで作られるPixelは白のグラデーションがついているのですか？</li>
+	<li>最初は透明で、borderなしの正方形を作成していましたが、この状態だとInkscapeではクリックしづらく非常にストレスを感じました。そこで、クリックしやすいように白のグラデーションをつけることにしました。<br>刺繍データに変換する際にはこのグラデーションは無視されるので問題ありません。</li>
+	<li>どうして多言語化しないのですか？</li>
+	<li>moファイルを使って多言語化しようと思ったのですが、うまくいきませんでした。いつか対応するかもしれません。</li>
+	</ul>
+	<ul class="en">
+	<li>Is it necessary to do cross-stitch with a sewing machine?</li>
+	<li>At first, I also thought, "Isn't this unnecessary?"<br>However, for cross-stitch, you need to choose fabric where the grid is easy to count. Therefore, it is difficult to embroider directly onto the material you want to embroider, and in many cases, you need to use embroidered patch. However, by using a sewing machine, you can embroider on any material that the sewing machine supports, regardless of the fabric type.<br>
+	Also, I have a neck condition, so I cannot work while looking down for long periods. Using a sewing machine can reduce the burden on me.
+	</li>
+	<li>Why aren't you committing to Ink/Stitch?</li>
+	<li>Because when I was developing it, I wasn't sure how much should be handled by Ink/Stitch. Cross-stitch involves many steps, starting from creating pixel data and converting it into embroidery data.<br>
+	Therefore, I thought it would not be appropriate to include everything in Ink/Stitch.<br>
+	However, there is a possibility that it might be incorporated into Ink/Stitch in the future.</li>
+
+	<li>Why do the pixels created by Ink/Pixel have a white gradient?</li>
+	<li>Initially, they were transparent and created as squares without borders, but in this state, it was difficult to click them in Inkscape, which was very frustrating.<br>
+	So, I decided to add a white gradient to make them easier to click.<br>
+	This gradient is ignored when converting to embroidery data, so there is no problem.</li>
+
+	<li>Why isn't it multilingual?</li>
+	<li>I tried to make it multilingual using mo files, but it didn't work well. I might support it someday.</li>
+	</ul>
+	</article>
+</div>
+<div>
+	<h2 class="ja">おわりに</h2>
+	<article>
+	<p class="ja">Ink/Stitchユーザーは、私と同じでなるべく高価な刺繍ソフトを使わずに刺繍データを作成したいと考えていると思います。<br>少しでもあなたの役に立てば幸いです。</p>
+	<h2 class="en">Conclusion</h2>
+	<p class="en">Ink/Stitch users, like myself, probably want to create embroidery data without using expensive embroidery software.<br>
+	I hope this will be of some help to you.</p>
+	</article>
+</div>
+
+</main>
+<footer>
+<p>2025 &copy; kurokky</p>
+</footer>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const lang = navigator.language || navigator.userLanguage;
+        const isJapanese = lang && lang.startsWith('ja');
+        const jaElements = document.querySelectorAll('.ja');
+        const enElements = document.querySelectorAll('.en');
+        if (isJapanese) {
+            jaElements.forEach(function(el) {
+                el.style.display = '';
+            });
+            enElements.forEach(function(el) {
+                el.style.display = 'none';
+            });
+        } else {
+            jaElements.forEach(function(el) {
+                el.style.display = 'none';
+            });
+            enElements.forEach(function(el) {
+                el.style.display = '';
+            });
+        }
+    });
+</script>
+
+</script>
+</body>
+</html>
