@@ -2,8 +2,9 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="description" content="">
-<meta name="keywords" content="">
+<meta name="robots" content="index, follow">
+<meta name="description" content="How to Create Cross-stitch on Inksacpe">
+<meta name="keywords" content="cross stitch,inkscape,インクスケープ,クロスステッチ">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 <title>How to Create Cross Stitch Data with Inkscape</title>
@@ -427,6 +428,17 @@
             });
         }
     });
+
+
+const params = new URLSearchParams(window.location.search);
+const lang = params.get('lang') || 'ja';
+
+if (lang === 'en') {
+  document.documentElement.lang = "en";
+  document.title = "How to Create Cross Stitch Data with Inkscape";
+  document.querySelector('meta[name="description"]').setAttribute("content", "How to Create Cross Stitch Data with Inkscape");
+}
+
 </script>
 
 </script>
